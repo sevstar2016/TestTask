@@ -2,6 +2,7 @@
 using System.Text.Json;
 using GQL.GraphQL.Types;
 using GQL.Models;
+using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -35,7 +36,9 @@ namespace GQL
 
         public async Task<Car> GetCarByIDAsync(long id)
         {
-            return _context.Cars.FirstOrDefault(c => c.Id == id);
+            var c = _context.Cars.FirstOrDefault(c => c.Id == id);
+            c.CarModel = _context.CarModels.Where(m => m.Id == c.CarModelId).FirstOrDefault();
+            return c;
         }
 
         public async Task<Statistics> GetStatisticsAsync()
@@ -44,7 +47,9 @@ namespace GQL
             {
                 CountObjects = await _context.Cars.CountAsync(),
                 DateFirstEntry = _context.Cars.FirstAsync().Result.LastEditUpdate,
-                DateLastEntry = _context.Cars.ToArray().Last().LastEditUpdate
+                DateLastEntry = _context.Cars.ToArray().Last().LastEditUpdate,
+                FirstCar = _context.Cars.FirstAsync().Result,
+                LastCar = _context.Cars.ToArray().Last()
             };
             return s;
         }
