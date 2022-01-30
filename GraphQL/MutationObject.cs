@@ -14,28 +14,20 @@ public class MutationObject : ObjectGraphType<object>
         Name = "Mutations";
         Description = "";
 
-        FieldAsync<CarObject, Car>(
+        FieldAsync<ReportObject, ReportT>(
             "AddCarAsync",
             "Add car from JSON",
             new QueryArguments(
                 new QueryArgument<NonNullGraphType<CarInputType>>
                 {
                     Name = "json",
-                    Description = "JSON for add car",
-                    DefaultValue = new Car
-                    {
-                        Name = "TestCar",
-                        Color="White",
-                        YearOfIssue="2011",
-                        Url="test.com",
-                        CarModelId= 0
-                    }
+                    Description = "JSON for add car"
                 }
             ),
             context => { return repo.AddCarAsync(context.GetArgument<Car>("json")); }
         );
 
-        FieldAsync<CarObject, Car>(
+        FieldAsync<ReportObject, ReportT>(
             "RemoveCarByIdAsync",
             "Remove car by ID",
             new QueryArguments(

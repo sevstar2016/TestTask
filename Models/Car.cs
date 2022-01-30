@@ -10,6 +10,7 @@ public class Car
     public string Color { get; set; }
     public string YearOfIssue { get; set; }
     public string Url { get; set; }
+    public string LastEditUpdate { get; set; }
     
     public long CarModelId { get; set; }
     public CarModel CarModel { get; set; }

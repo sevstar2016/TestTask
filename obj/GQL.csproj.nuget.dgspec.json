@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dbase\\GQL\\GQL.csproj": {}
+    "C:\\Users\\sevst\\RiderProjects\\TestTask\\GQL.csproj": {}
   },
   "projects": {
-    "D:\\dbase\\GQL\\GQL.csproj": {
+    "C:\\Users\\sevst\\RiderProjects\\TestTask\\GQL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dbase\\GQL\\GQL.csproj",
+        "projectUniqueName": "C:\\Users\\sevst\\RiderProjects\\TestTask\\GQL.csproj",
         "projectName": "GQL",
-        "projectPath": "D:\\dbase\\GQL\\GQL.csproj",
-        "packagesPath": "C:\\Users\\12\\.nuget\\packages\\",
-        "outputPath": "D:\\dbase\\GQL\\obj\\",
+        "projectPath": "C:\\Users\\sevst\\RiderProjects\\TestTask\\GQL.csproj",
+        "packagesPath": "C:\\Users\\sevst\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sevst\\RiderProjects\\TestTask\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\12\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\sevst\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -113,7 +111,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\sevst\\.dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

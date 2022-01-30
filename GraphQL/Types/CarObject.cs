@@ -17,26 +17,7 @@ public class CarObject : ObjectGraphType<Car>
         Field(c => c.Url).Description("Url from car");
         Field(c => c.YearOfIssue).Description("Year of issue");
         Field(c => c.CarModelId).Description("Id of car model");
-    }
-}
-
-public class CarListObject : ObjectGraphType<CarList>
-{
-    public CarListObject()
-    {
-        Field<ListGraphType<CarObject>>("cars");
-    }
-}
-
-public class CarInputType : InputObjectGraphType
-{
-    public CarInputType()
-    {
-        Name = "CarInput";
-        Field<NonNullGraphType<StringGraphType>>("name");
-        Field<NonNullGraphType<StringGraphType>>("color");
-        Field<NonNullGraphType<StringGraphType>>("url");
-        Field<NonNullGraphType<StringGraphType>>("yearOfIssue");
-        Field<NonNullGraphType<LongGraphType>>("carModelId");
+        Field(c => c.CarModel).Description("Car model");
+        Field(c => c.LastEditUpdate).Description("Last edit update");
     }
 }

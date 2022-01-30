@@ -6,8 +6,13 @@ namespace GQL
 {
     public interface ICarRepo
     {
+        //Query
         public List<Car> GetAllObjects();
-        public Task<Car> AddCarAsync(Car json);
-        public Task<Car> RemoveCarByIdAsync(long Id);
+        public Task<Car> GetCarByIDAsync(long id);
+        public Task<Statistics> GetStatisticsAsync();
+
+        //Mutations
+        public Task<ReportT> AddCarAsync(Car json);
+        public Task<ReportT> RemoveCarByIdAsync(long Id);
     }
 }

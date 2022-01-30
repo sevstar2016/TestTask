@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GQL.GraphQL;
+using GQL.GraphQL.Types;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Altair;
 using GraphQL.SystemTextJson;
@@ -19,7 +20,7 @@ namespace GQL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkSqlServer().AddDbContext<CarContext>();
-            
+
             services
                 .AddGraphQL(
                     (options, provider) =>
