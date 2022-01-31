@@ -2,6 +2,7 @@
 using System.Text.Json;
 using GQL.GraphQL.Types;
 using GQL.Models;
+using GraphQL.Language.AST;
 using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +11,6 @@ using Newtonsoft.Json;
 
 namespace GQL
 {
-    public class CarJ
-    {
-        public string Name;
-        public string Color;
-        public string YearOfIssue;
-        public string Url;
-        public string ModelName;
-    }
-    
     public class CarRepo : ICarRepo
     {
         private readonly CarContext _context;
@@ -41,6 +33,12 @@ namespace GQL
             return c;
         }
 
+        public async Task<CarModel> GetCarModelById(long id)
+        {
+            var cm = _context.CarModels.FirstOrDefault(m => m.Id == id);
+            return cm;
+        }
+
         public async Task<Statistics> GetStatisticsAsync()
         {
             var s = new Statistics()
@@ -57,20 +55,52 @@ namespace GQL
         public async Task<ReportT> AddCarAsync(Car json)
         {
             var car = json;
-            var c = new Car
+            if (_context.CarModels.Where(m => m.Id == json.CarModelId).FirstOrDefault() != null)
             {
-                Name = car.Name, Color = car.Color, Url = car.Url, YearOfIssue = car.YearOfIssue,
-                CarModelId = car.CarModelId, LastEditUpdate = DateTime.Now.ToString()
+                var c = new Car
+                {
+                    Name = car.Name, Color = car.Color, Url = car.Url, YearOfIssue = car.YearOfIssue,
+                    CarModelId = car.CarModelId, LastEditUpdate = DateTime.Now.ToString()
+                };
+                if (_context.Cars.Where(w => w == c).FirstOrDefault() != null)
+                {
+                    return new ReportT() {Report = "Error: Object already exists"};
+                }
+                else
+                {
+                    var cc = _context.Cars.Add(c).Entity;
+                    await _context.SaveChangesAsync();
+                    if (cc != null)
+                    {
+                        return new ReportT() {Report = "Succeful"};
+                    }
+                    else
+                    {
+                        return new ReportT() {Report = "Error: Object could not be created. See logs for details"};
+                    }
+                }
+            }
+            else
+            {
+                return new ReportT() {Report = "This manufacturer does not exist. Create a CarModel object"};
+            }
+        }
+
+        public async Task<ReportT> AddCarModelAsync(CarModel json)
+        {
+            var carmodel = new CarModel()
+            {
+                Name = json.Name, Id = json.Id, Url = json.Url, LastEditUpdate = DateTime.Now.ToString()
             };
-            if (_context.Cars.Where(w => w == c).FirstOrDefault() != null)
+            if (_context.CarModels.Where(c => c == carmodel).FirstOrDefault() != null)
             {
                 return new ReportT() {Report = "Error: Object already exists"};
             }
             else
             {
-                var cc = _context.Cars.Add(c).Entity;
+                var cm = _context.CarModels.Add(carmodel).Entity;
                 await _context.SaveChangesAsync();
-                if (cc != null)
+                if (cm != null)
                 {
                     return new ReportT() {Report = "Succeful"};
                 }
@@ -83,12 +113,27 @@ namespace GQL
 
         public async Task<ReportT> RemoveCarByIdAsync(long Id)
         {
-            var car = _context.Cars.SingleOrDefault(c => c.Id == Id);
-            var cc = new Car();
+            var car = _context.Cars.FirstOrDefault(c => c.Id == Id);
             if (car != null)
             {
-                cc = _context.Cars.Remove(car).Entity;
+                var cc = _context.Cars.Remove(car).Entity;
                 _context.Entry(car).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                return new ReportT(){Report = "Succes"};
+            }
+            else
+            {
+                return new ReportT(){Report = "Error: Object does not exist"};
+            }
+        }
+
+        public async Task<ReportT> RemoveCarModelByIdAsync(long Id)
+        {
+            var cm = _context.CarModels.FirstOrDefault(m => m.Id == Id);
+            if (cm != null)
+            {
+                var ccm = _context.CarModels.Remove(cm).Entity;
+                _context.Entry(cm).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
                 return new ReportT(){Report = "Succes"};
             }

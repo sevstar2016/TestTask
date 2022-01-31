@@ -27,6 +27,17 @@ public class QueryObject : ObjectGraphType<object>
                 }),
             context => repo.GetCarByIDAsync(context.GetArgument<long>("id"))
             );
+        FieldAsync<CarModelObject, CarModel>(
+            "GetCarModelById",
+            "Get car model by id",
+            new QueryArguments(
+                new QueryArgument<NonNullGraphType<LongGraphType>>()
+                {
+                    Name = "id"
+                }
+            ),
+            context => repo.GetCarModelById(context.GetArgument<long>("id"))
+        );
         FieldAsync<StatisticsObject, Statistics>(
             "GetStatistics",
             "Get statistics",

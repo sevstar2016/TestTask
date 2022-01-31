@@ -38,5 +38,28 @@ public class MutationObject : ObjectGraphType<object>
             ),
             context => repo.RemoveCarByIdAsync(context.GetArgument<long>("Id"))
         );
+
+        FieldAsync<ReportObject, ReportT>(
+            "AddCarModel",
+            "Add car model",
+            new QueryArguments(
+                new QueryArgument<NonNullGraphType<CarModelInputType>>()
+                {
+                    Name = "json"
+                }
+            ),
+            context => repo.AddCarModelAsync(context.GetArgument<CarModel>("json"))
+        );
+
+        FieldAsync<ReportObject, ReportT>(
+            "RemoveCarModel",
+            "Renove car model",
+            new QueryArguments(
+                new QueryArgument<NonNullGraphType<LongGraphType>>()
+                {
+                    Name = "Id"
+                }),
+            context => repo.RemoveCarModelByIdAsync(context.GetArgument<long>("Id"))
+        );
     }
 }

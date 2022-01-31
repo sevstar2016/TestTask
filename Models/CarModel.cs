@@ -8,6 +8,7 @@ public class CarModel
     public long Id { get; set; }
     public string Name { get; set; }
     public string Url { get; set; }
+    public string LastEditUpdate { get; set; }
     
     public IList<Car> Cars { get; set; }
 
